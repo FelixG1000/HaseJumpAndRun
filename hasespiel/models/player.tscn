@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://b680omt6of"]
+
+[ext_resource type="Script" uid="uid://djhe6jnh024ch" path="res://models/player.gd" id="1_uc0rf"]
+[ext_resource type="Script" uid="uid://rw3db66qr1o1" path="res://script/camera_3d.gd" id="2_cw8dn"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_uc0rf"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_cw8dn"]
+
+[node name="RigidBody3D" type="RigidBody3D"]
+axis_lock_angular_x = true
+axis_lock_angular_y = true
+axis_lock_angular_z = true
+mass = 0.517
+script = ExtResource("1_uc0rf")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CapsuleMesh_uc0rf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_cw8dn")
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.976571, 0.215196, 0, -0.215196, 0.976571, 0, 0.732515, 2.12069)
+script = ExtResource("2_cw8dn")
