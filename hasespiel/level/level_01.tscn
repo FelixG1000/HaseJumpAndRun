@@ -1,42 +1,41 @@
-[gd_scene load_steps=6 format=3 uid="uid://dnivuilxetc0f"]
+[gd_scene load_steps=5 format=3 uid="uid://dnivuilxetc0f"]
 
 [ext_resource type="PackedScene" uid="uid://b680omt6of" path="res://models/player.tscn" id="1_b2jwu"]
+[ext_resource type="Script" uid="uid://dagdus2vno1u" path="res://script/backbutton.gd" id="2_42frl"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b2jwu"]
-albedo_color = Color(0.160698, 1, 0.97179, 1)
+[sub_resource type="PlaneMesh" id="PlaneMesh_ai44i"]
 
-[sub_resource type="BoxShape3D" id="BoxShape3D_ai44i"]
-
-[sub_resource type="BoxMesh" id="BoxMesh_b2jwu"]
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_42frl"]
-data = PackedVector3Array(-0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, -0.5, 0.5, -0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, 0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, -0.5, -0.5)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_b2jwu"]
+data = PackedVector3Array(1, 0, 1, -1, 0, 1, 1, 0, -1, -1, 0, 1, -1, 0, -1, 1, 0, -1)
 
 [node name="Level01" type="Node3D"]
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.968073, 0.250667, 0, -0.250667, 0.968073, 0, 11.4259, 12.8088)
 light_energy = 16.0
 
 [node name="StaticBody3D" type="StaticBody3D" parent="."]
-transform = Transform3D(100, 0, 0, 0, 1, 0, 0, 0, 100, 0, -2.00891, 0)
 
-[node name="CSGBox3D" type="CSGBox3D" parent="StaticBody3D"]
-material = SubResource("StandardMaterial3D_b2jwu")
+[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+mesh = SubResource("PlaneMesh_ai44i")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
-shape = SubResource("BoxShape3D_ai44i")
+[node name="CollisionShape3D2" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(5, 0, 0, 0, 5, 0, 0, 0, 5, 0, 0, 0)
+shape = SubResource("ConcavePolygonShape3D_b2jwu")
 
-[node name="RigidBody3D" parent="." instance=ExtResource("1_b2jwu")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.2817, 3.40272, 6.02471)
+[node name="CharacterBody3D" parent="." instance=ExtResource("1_b2jwu")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.852796, 2.11259, -1.60338)
 
-[node name="StaticBody3D2" type="StaticBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.1828, 0, 0)
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="StaticBody3D2"]
-mesh = SubResource("BoxMesh_b2jwu")
+[node name="Button" type="Button" parent="."]
+offset_left = 1010.0
+offset_top = 13.0
+offset_right = 1128.0
+offset_bottom = 86.0
+tooltip_text = "go back to the start menu"
+text = "exit"
+script = ExtResource("2_42frl")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D2"]
-shape = SubResource("ConcavePolygonShape3D_42frl")
+[connection signal="pressed" from="Button" to="CharacterBody3D" method="_on_button_pressed"]
